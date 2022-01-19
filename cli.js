@@ -7,7 +7,15 @@
  */
  
 // Dependencies.
- 
+ const readline = require('readline'); 
+const util = require('util');
+let debug = util.debuglog('cli');
+const events = require('events');
+
+// Extend the event class
+// This is the node recommended way to interact with event class
+class _events extends events{}
+let e = new _events();
  
 // App object or Module scaffolding.
 const cli = {} 
