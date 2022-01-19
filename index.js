@@ -13,6 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const { StringDecoder } = require('string_decoder');
+const cli = require('./cli');
 
  
  
@@ -23,7 +24,7 @@ const server = {};
 server.createHttpServer = ()=>{
     const createHttpServerVariable = http.createServer(server.handleReqRes);
     createHttpServerVariable.listen(3000, ()=>{
-        console.log('\x1b[33m%s\x1b' ,`Listening on port 3000`);
+        console.log('\x1b[33m%s\x1b', 'Listening CLI App');
     })
 }
  
@@ -39,10 +40,17 @@ server.createHttpServer = ()=>{
     res.setHeader('Content-Type', 'Application/json')
     // res.writeHead(statusCode)
     res.write('ok')
-    console.log('\x1b[34m%s\x1b', 'pinging...');
+    console.log('\x1b[33m%s\x1b', 'pinging...');
     res.end();
  }
  
  server.createHttpServer();
+
+// Start the cli functions with delay so it appear later in terminal
+setTimeout(() => {
+    cli.init()
+}, 200);
+
+
 // export the module.
  module.exports = server;
