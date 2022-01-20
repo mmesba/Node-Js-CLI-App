@@ -73,7 +73,15 @@ cli.responders.help = ()=>{
 
 // Exit
 cli.responders.exit = ()=>{
-    console.log('You asked for exit');
+    // The process.exit() method instructs Node.js to terminate the process synchronously with an exit status of code. If code is omitted, exit uses either the 'success' code 0 or the value of process.exitCode if it has been set. Node.js will not terminate until all the 'exit' event listeners are called.
+
+//     The shell that executed Node.js should see the exit code as 1.
+
+// Calling process.exit() will force the process to exit as quickly as possible even if there are still asynchronous operations pending that have not yet completed fully, including I/O operations to process.stdout and process.stderr.
+
+// Node.js to terminate the process synchronously with an exit status of code. If code is omitted, exit uses either the 'success' code 0 or the value of process.exitCode if it has been set. Node.js will not terminate until all the 'exit' event listeners are called.
+
+    process.exit(0);
 }
 
 // Stats
