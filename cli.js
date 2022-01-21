@@ -68,7 +68,18 @@ cli.responders = {};
 
 // help/man
 cli.responders.help = ()=>{
-    console.log('You asked for help');
+    let commands = {
+        'exit' : 'Kill the CLI (and the rest of the application)',
+        'man' : 'Show this help page', 
+        'help' : 'Alias of the "man" command',
+        'stats' : 'Get statistics on the underlying operating system and resource utilization',
+        'list users' : 'Show a list of all the registered (unDeleted) users in system',
+        'more user info --{userId}' : 'Show details of a specific user',
+        'list checks --up --down' : 'Show a list of all the active checks in the system, including their state. The " --up" and the " --down" flags are both optional',
+        'more check info --{checkId}' : 'Show details of a specific check',
+        'list logs' :   'Show a list of all the log files available to be read (compressed and uncompressed)',
+        'more log info  --{fileName}' : 'Show details of a specific log file'
+    }
 }
 
 // Exit
