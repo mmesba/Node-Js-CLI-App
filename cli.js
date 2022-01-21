@@ -80,6 +80,73 @@ cli.responders.help = ()=>{
         'list logs' :   'Show a list of all the log files available to be read (compressed and uncompressed)',
         'more log info  --{fileName}' : 'Show details of a specific log file'
     }
+
+    // Show a header for the help page that is as wide the screen
+    cli.horizontalLine();
+    cli.centered('CLI MANUAL');
+    cli.horizontalLine();
+    cli.verticalSpace(2);
+
+    // Show each command, followed by its explanation, in white and yellow respectively
+    for(let key in commands){
+        if(commands.hasOwnProperty(key)){
+            let value = commands[key];
+            let line = '\x1b[33m'+key+'\x1b[0m';
+            let padding = 60 - line.length;
+            for(i = 0; i < padding; i++){
+                line+= ' ';
+            }
+            line+=value;
+            console.log(line);
+            cli.verticalSpace();
+        }
+    }
+
+    cli.verticalSpace(1);
+
+    // End with another horizontally
+    cli.horizontalLine();
+
+}
+
+// Create a vertical space
+cli.verticalSpace = (lines)=>{
+    lines = typeof(lines) == 'number' && lines > 0 ? lines : 1;
+    for(i  = 0; i < lines; i++){
+        console.log(' ');
+    }
+}
+
+// Create a horizontal line across the screen
+cli.horizontalLine = ()=>{
+    // Get the available screen size
+    //  Screen size is available in process.stdout.columns.
+    let width = process.stdout.columns;
+
+    let line = '';
+    for(i=0; i < width; i++){
+        line+='-'
+    }
+    console.log(line);
+}
+
+// Create centered text on the screen
+cli.centered = (str)=>{
+    str = typeof(str) == 'string' && str.trim().length > 0 ? str.trim() : '';
+
+    // Get the available screen size
+    let width = process.stdout.columns;
+
+    // Calculate the left padding there should be
+    let leftPadding  = Math.floor((width - str.length) / 2);
+
+    // Put the left padding spaces before the string itself
+    let line = '';
+    for(i=0; i < leftPadding; i++){
+        line+= ' ';
+    }
+    line+= str;
+    console.log(line);
 }
 
 // Exit
