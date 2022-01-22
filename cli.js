@@ -11,6 +11,8 @@
 const util = require('util');
 let debug = util.debuglog('cli');
 const events = require('events');
+const os = require('os');
+const v8 = require('v8');
 
 // Extend the event class
 // This is the node recommended way to interact with event class
@@ -166,14 +168,14 @@ cli.responders.exit = ()=>{
 cli.responders.stats = ()=>{
     // Compile an object of stats
     let stats = {
-        'Load Average' : '',
-        'CPU Count' : '',
-        'Free Memory' : '',
-        'Current Malloced Memory' : '',
-        'Peak Malloced Memory' : '',
-        'Allocated Heap Used (%)' : '',
-        'Available Heap Allocated (%)' : '',
-        'Uptime' : ''
+        'Load Average' : os.loadavg().join(' '),
+        'CPU Count' : os.cpus().length,
+        'Free Memory' : os.freemem(),
+        'Current Malloced Memory' : v8.getHeapStatistics().malloced_memory,
+        'Peak Malloced Memory' : v8.getHeapStatistics().peak_malloced_memory,
+        'Allocated Heap Used (%)' : Math.round((v8.getHeapStatistics().used_heap_size / v8.getHeapStatistics().total_heap_size) * 100),
+        'Available Heap Allocated (%)' : Math.round((v8.getHeapStatistics().total_heap_size / v8.getHeapStatistics().heap_size_limit) * 100 ),
+        'Uptime' : os.uptime()+' Seconds'
     }
 
     // Create a header for the stats
@@ -287,7 +289,7 @@ cli.processInput = (str)=>{
 //  Init Script
  cli.init = ()=>{
     // Send the start message to the console , in dark blue
-    console.log('\x1b[34m%s\x1b', 'The CLI is running');
+    console.log('\x1b[34m%s\x1b[0m', 'The CLI is running');
 
     // Start the interface
     let _interface = readline.createInterface({
