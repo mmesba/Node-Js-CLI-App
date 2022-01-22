@@ -164,7 +164,45 @@ cli.responders.exit = ()=>{
 
 // Stats
 cli.responders.stats = ()=>{
-    console.log('You asked for stats');
+    // Compile an object of stats
+    let stats = {
+        'Load Average' : '',
+        'CPU Count' : '',
+        'Free Memory' : '',
+        'Current Malloced Memory' : '',
+        'Peak Malloced Memory' : '',
+        'Allocated Heap Used (%)' : '',
+        'Available Heap Allocated (%)' : '',
+        'Uptime' : ''
+    }
+
+    // Create a header for the stats
+    cli.horizontalLine();
+    cli.centered('SYSTEM STATISTICS');
+    cli.horizontalLine();
+    cli.verticalSpace(2);
+
+    // Log out each stat
+    for(let key in stats){
+        if(stats.hasOwnProperty(key)){
+            let value = stats[key];
+            let line = '\x1b[33m'+key+'\x1b[0m';
+            let padding = 60 - line.length;
+            for(i = 0; i < padding; i++){
+                line+=' ';
+            }
+            line+=value;
+            console.log(line);
+            cli.verticalSpace();
+        }
+    }
+
+    cli.verticalSpace();
+
+    // End with another horizontal line
+    cli.horizontalLine();
+
+
 }
 
 // List users
